@@ -6,14 +6,14 @@ data "template_file" "inventory" {
     "google_compute_instance.workers",
   ]
 
-  vars {
+  vars = {
     managers = "${join("\n", google_compute_instance.managers.*.network_interface.0.access_config.0.nat_ip)}"
     workers  = "${join("\n", google_compute_instance.workers.*.network_interface.0.access_config.0.nat_ip)}"
   }
 }
 
 resource "null_resource" "cmd" {
-  triggers {
+  triggers = {
     template_rendered = "${data.template_file.inventory.rendered}"
   }
 
