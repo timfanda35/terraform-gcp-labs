@@ -13,12 +13,12 @@ resource "google_compute_instance" "workers" {
     }
   }
 
-  metadata {
+  metadata = {
     sshKeys = "${var.ssh_user}:${file(var.ssh_pub_key_file)}"
   }
 
   network_interface {
     network       = "${google_compute_network.swarm.name}"
-    access_config = {}
+    access_config {}
   }
 }
